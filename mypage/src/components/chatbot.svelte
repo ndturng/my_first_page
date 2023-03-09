@@ -1,6 +1,7 @@
 <script>
     // @ts-nocheck
     import {autofocus} from '../untils/autofocus'
+
     const chat_chunks = [
         {
             id: 1,
@@ -18,7 +19,12 @@
             id: 4,
             text: 'Thank you for talking to me.',
         },
+        {
+            id: 5,
+            text: 'Please go on',
+        }
     ];
+
     let comments = [];
    
     function handleKeyDown(event) {
@@ -55,19 +61,57 @@
 <div class="chat">
     <h1>Chat with Stupid Bot</h1>
     
-    <div>
+    <div class="scrollable" >
         {#each comments as comment}
-            <article>
+            <article class={comment.author}>
                 <span>{comment.text}</span>
             </article>
         {/each}
     </div>
     <input use:autofocus on:keydown={handleKeyDown}>
 </div>
-
-
-
-
-<style>
     
+<style>
+    h1 {
+        text-align: center;
+    }
+
+    /* creat a box at the center of page to chat */
+    .chat {
+        display: flex; 
+    flex-direction: column; 
+    height: 100%; 
+    max-width: 400px; 
+    max-height: 600px; 
+    margin: 0 auto; 
+    border: 1px transparent; 
+    padding: 5px; 
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    overflow-x:hidden;
+    }
+
+    article {
+		margin: 0.5em 0;
+	}	
+
+    .user {
+		text-align: right;
+	}
+
+    span {
+		padding: 0.5em 1em;
+		display: inline-block;
+	}
+    
+    .bot span {
+		background-color: #eee;
+		border-radius: 1em 1em 1em 0;
+	}
+
+	.user span {
+		background-color: #0074D9;
+		color: white;
+		border-radius: 1em 1em 0 1em;
+		word-break: break-all;
+	}
 </style>
