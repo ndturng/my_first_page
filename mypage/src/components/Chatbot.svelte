@@ -1,6 +1,16 @@
 <script>
     // @ts-nocheck
     import {autofocus} from '../untils/autofocus'
+    import { afterUpdate } from 'svelte';
+
+    let div;
+	let autoscroll = true;
+    let comments = [];
+
+    
+    afterUpdate(() => {
+		if (autoscroll) div.scrollTo(0, div.scrollHeight);
+	});
 
     const chat_chunks = [
         {
@@ -25,8 +35,6 @@
         }
     ];
 
-    let comments = [];
-   
     function handleKeyDown(event) {
         if (event.key === 'Enter') {
             const text = event.target.value;
@@ -61,7 +69,7 @@
 <div class="chat">
     <h1>Chat with Stupid Bot</h1>
     
-    <div class="scrollable" >
+    <div class="scrollable" bind:this={div}>
         {#each comments as comment}
             <article class={comment.author}>
                 <span>{comment.text}</span>
@@ -89,6 +97,13 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     overflow-x:hidden;
     }
+
+    .scrollable {
+		flex: 1 1 auto;
+		border-top: 1px solid #eee;
+		margin: 0 0 0.5em 0;
+		overflow-y: auto;
+	}
 
     article {
 		margin: 0.5em 0;
